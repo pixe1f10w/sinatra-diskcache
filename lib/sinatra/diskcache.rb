@@ -45,18 +45,11 @@ module Sinatra
             def cache_get filename
                 filepath = path_to filename
 
-                if not File.size? filename
+                if not ( File.size? filename ) and settings.diskcache_empty_cleanup
                     cache_log "#{filename} is empty, wiping"
                     File.delete filepath
                     nil
-                else
-#                if File.exist? filepath
-#                    if not File.size? filename
-#                        cache_log "#{filename} is empty, wiping"
-#                        File.delete filepath
-#                        return nil
-#                    end
-
+                elsif File.exist? filepath
                     if ( File.ctime( filepath ) + settings.diskcache_expiry_period > Time.now ) or not settings.diskcache_expiry_enabled
                         begin
                             cache_log "found unexpirable file #{filepath}"
@@ -80,6 +73,7 @@ module Sinatra
             app.set :diskcache_enabled, true
             app.set :diskcache_logging, true if app.development?
             app.set :diskcache_expiry_enabled, true
+            app.set :diskcache_empty_cleanup, true
             app.set :diskcache_expiry_period, 3600
             app.set :diskcache_full_paths, true
             app.set :diskcache_path, "./diskcache"
