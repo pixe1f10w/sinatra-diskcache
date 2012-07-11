@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Sinatra::DiskCache::VERSION
   s.authors     = ["Ilia Zhirov"]
   s.email       = ["izhirov@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "http://github.com/pixe1f10w/sinatra-diskcache"
   s.summary     = %q{Sinatra disk cache}
   s.description = %q{Allows to cache heavy-load query results on the disk}
 
