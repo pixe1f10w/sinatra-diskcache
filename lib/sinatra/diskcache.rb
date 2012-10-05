@@ -21,7 +21,7 @@ module Sinatra
                 end
             rescue => e
                 throw e if settings.development? or settings.show_exceptions
-                
+
                 if block_given?
                     block.call path_to filename
                     return resulting_name filename
@@ -45,7 +45,7 @@ module Sinatra
             def cache_get filename
                 filepath = path_to filename
 
-                if not ( File.size? filename ) and settings.diskcache_empty_cleanup
+                if not ( File.size? filepath ) and settings.diskcache_empty_cleanup
                     cache_log "#{filename} is empty, wiping"
                     File.delete filepath
                     nil
@@ -65,7 +65,7 @@ module Sinatra
                 end
             end
         end
-        
+
         def self.registered app
             app.helpers DiskCache::Helpers
 
