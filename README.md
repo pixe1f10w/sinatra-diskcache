@@ -14,26 +14,26 @@ Nope. It doesn't have any dependencies.
 
 Oh, it's pretty easy and straightforward. Look, I'll show you.
 
-    ```ruby
-    require 'sinatra'
-    require 'sinatra/diskcache'
+```ruby
+require 'sinatra'
+require 'sinatra/diskcache'
 
-    # ... something clever here ...
+# ... something clever here ...
 
-    get '/something' do
-        result = diskcache 'somefile' do |file| # this block will be invoked only in case of absence of 'somefile'
-            f = File.open file, 'w'
+get '/something' do
+    result = diskcache 'somefile' do |file| # this block will be invoked only in case of absence of 'somefile'
+        f = File.open file, 'w'
 
-            # heavy load here
-            sleep 5
+        # heavy load here
+        sleep 5
 
-            f.write 'something to be cached'
-            f.close
-        end
-
-        send_file result # or transfer it anyhow else
+        f.write 'something to be cached'
+        f.close
     end
-    ```
+
+    send_file result # or transfer it anyhow else
+end
+```
 
 Basically, that's all. For more detailed example you can look [here](https://github.com/pixe1f10w/scalls/).
 
