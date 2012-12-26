@@ -45,7 +45,7 @@ module Sinatra
             def cache_get filename
                 filepath = path_to filename
 
-                if not ( File.size? filepath ) and settings.diskcache_empty_cleanup
+                if File.exist? filepath and File.size?( filepath ) == 0 and settings.diskcache_empty_cleanup
                     cache_log "#{filename} is empty, wiping"
                     File.delete filepath
                     nil
@@ -53,15 +53,18 @@ module Sinatra
                     if ( File.ctime( filepath ) + settings.diskcache_expiry_period > Time.now ) or not settings.diskcache_expiry_enabled
                         begin
                             cache_log "found unexpirable file #{filepath}"
-                            return File.new filepath, 'r'
+                            return File.open filepath, 'r'
                         rescue IOError => e
                             cache_log "can't open #{filename}, skipping"
+                            nil
                         end
                     else
                         cache_log "#{filename} expired, wiping"
                         File.delete filepath
                         nil
                     end
+                else
+                    nil
                 end
             end
         end
