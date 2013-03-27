@@ -1,4 +1,4 @@
-# Sinatra-DiskCache
+# Sinatra-DiskCache [![Gem Version](https://badge.fury.io/rb/sinatra-diskcache.png)](http://badge.fury.io/rb/sinatra-diskcache)
 
 Allows to cache heavy-load query results on the disk.
 
